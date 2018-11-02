@@ -2,8 +2,8 @@ import tensorflow as tf
 import numpy as np
 import random
 import time
-# from model_seq2seq_contrib import Seq2seq
-from model_seq2seq import Seq2seq
+from model_seq2seq_contrib import Seq2seq
+# from model_seq2seq import Seq2seq
 
 tf_config = tf.ConfigProto(allow_soft_placement=True)
 tf_config.gpu_options.allow_growth = True 
@@ -99,7 +99,7 @@ if __name__ == "__main__":
 	
 	
 	print("(3) run model......")
-	batches = 1000
+	batches = 3000
 	print_every = 100
 	
 	with tf.Session(config=tf_config) as sess:

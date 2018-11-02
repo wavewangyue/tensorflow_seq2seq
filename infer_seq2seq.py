@@ -26,7 +26,6 @@ if __name__ == "__main__":
 	
 	
 	print("(3) run model......")
-	batches = 1000
 	print_every = 100
 	max_target_len = 20
 	
