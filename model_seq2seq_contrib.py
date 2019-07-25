@@ -18,10 +18,14 @@ class Seq2seq(object):
 			encoder_embedding = tf.Variable(tf.random_uniform([config.source_vocab_size, config.embedding_dim]), dtype=tf.float32, name='encoder_embedding')
 			encoder_inputs_embedded = tf.nn.embedding_lookup(encoder_embedding, self.seq_inputs)
 			
-			with tf.variable_scope("gru_cell"):
-				encoder_cell = tf.nn.rnn_cell.GRUCell(config.hidden_dim)
-			
-			((encoder_fw_outputs, encoder_bw_outputs), (encoder_fw_final_state, encoder_bw_final_state)) = tf.nn.bidirectional_dynamic_rnn(cell_fw=encoder_cell, cell_bw=encoder_cell, inputs=encoder_inputs_embedded, sequence_length=self.seq_inputs_length, dtype=tf.float32, time_major=False)
+			((encoder_fw_outputs, encoder_bw_outputs), (encoder_fw_final_state, encoder_bw_final_state)) = tf.nn.bidirectional_dynamic_rnn(
+				cell_fw=tf.nn.rnn_cell.GRUCell(config.hidden_dim), 
+				cell_bw=tf.nn.rnn_cell.GRUCell(config.hidden_dim), 
+				inputs=encoder_inputs_embedded, 
+				sequence_length=self.seq_inputs_length, 
+				dtype=tf.float32, 
+				time_major=False
+			)
 			encoder_state = tf.add(encoder_fw_final_state, encoder_bw_final_state)
 			encoder_outputs = tf.add(encoder_fw_outputs, encoder_bw_outputs)
 		
