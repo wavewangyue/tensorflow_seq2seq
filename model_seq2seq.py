@@ -27,6 +27,7 @@ class Seq2seq(object):
 		# encoder_outputs: B * S * D
 		attn_weights = tf.matmul(encoder_outputs, tf.expand_dims(hidden, 2))
 		# attn_weights: B * S * 1
+		attn_weights = tf.nn.softmax(attn_weights, axis=1)
 		context = tf.squeeze(tf.matmul(tf.transpose(encoder_outputs, [0,2,1]), attn_weights))
 		# context: B * D
 		return context
